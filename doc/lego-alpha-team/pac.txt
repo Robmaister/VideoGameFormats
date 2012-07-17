@@ -1,0 +1,39 @@
+LEGO Alpha Team container format (.pac)
+
+File structure:
+	<Header>
+	<File Table>
+	<File Data>
+
++----------------------------------------------------------------------------+
+|                                   Header                                   |
++----------+----------+------------------------------------------------------+
+| Offset   | Length   | Description                                          |
++----------+----------+------------------------------------------------------+
+| 0        | 4        | "PACK" magic ID                                      |
+| 4        | 4        | file length                                          |
+| 8        | 4        | number of subdirectories                             |
+| 12       | 4        | file data offset                                     |
+| 16       | 4        | number of contained files                            |
++----------+----------+------------------------------------------------------+
+Total: 20 bytes
+
+
++----------------------------------------------------------------------------+
+|                              File Table Entry                              |
++----------+----------+------------------------------------------------------+
+| Offset   | Length   | Description                                          |
++----------+----------+------------------------------------------------------+
+| 0        | var      | file name, null-terminated string                    |
+| var + 0  | 4        | unknown                                              |
+| var + 4  | 4        | file offset                                          |
+| var + 8  | 4        | file length                                          |
+| var + 12 | 8        | timestamp as a Windows FILETIME struct               |
++----------+----------+------------------------------------------------------+
+Total: var + 20 bytes
+
+Other Information:
+ - None of the pac files that come with LEGO Alpha Team have subdirectories,
+   but when looking at the exported symbols in DDPackedDirFileLib.dll, there
+   is a method to get subdirectories. There was only one unknown value in the
+   header, so I am assuming that is the number of subdirectories in the file.
