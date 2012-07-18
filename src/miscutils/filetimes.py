@@ -90,7 +90,6 @@ def filetime_to_dt(ft):
     """
     # Get seconds and remainder in terms of Unix epoch
     (s, ns100) = divmod(ft - EPOCH_AS_FILETIME, HUNDREDS_OF_NANOSECONDS)
-    print s
     # Convert to datetime object
     dt = datetime.utcfromtimestamp(s)
     # Add remainder in as microseconds. Python 3.2 requires an integer

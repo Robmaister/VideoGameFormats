@@ -14,6 +14,3 @@ if __name__ == '__main__':
                 f.extract_all()
             else:
                 f.extract(sys.argv[2])
-    else:
-        f = PACFile("lego_alpha_team/Etc.pac")
-        f.print_all_entries()
