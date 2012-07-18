@@ -50,20 +50,20 @@ class PACFile:
             self.num_files = header[4]
             self.__parse_entries(f)
             
-    def extract_all(self):
+    def extract_all(self, out_path):
         f = open(self.path, "rb")
         for entry in self.files:
-            self.__extract_entry(f, entry)
+            self.__extract_entry(f, entry, out_path)
         f.close()
     
-    def extract(self, entry):
+    def extract(self, entry, out_path):
         f = open(self.path, "rb")
         if isinstance(entry, PACEntry):
             self.__extract_entry(f, entry)
         else:
             try:
                 entry_obj = next(e for e in self.files if e.name == entry)
-                self.__extract_entry(f, entry_obj)
+                self.__extract_entry(f, entry_obj, out_path)
             except StopIteration:
                 raise ValueError("Entry '" + entry + "' cannot be found.")
         f.close()
@@ -86,7 +86,8 @@ class PACFile:
                 entry_name = self.__parse_name(f)
                 entry_info = struct.unpack("<3I", f.read(12))
                 entry_timestamp = struct.unpack("q", f.read(8))
-                self.files.append(PACEntry(entry_name, entry_info[2],
+                if not entry_info[1] == 0:
+                    self.files.append(PACEntry(entry_name, entry_info[2],
                                             entry_info[1], entry_timestamp[0]))
     
     def __parse_name(self, f):
@@ -97,7 +98,9 @@ class PACFile:
             cur_char = f.read(1)
         return ''.join(str_list)
         
-    def __extract_entry(self, f, entry):
+    def __extract_entry(self, f, entry, out_path):
+        if not os.path.exists(out_path):
+            os.makedirs(out_path)
         f.seek(entry.offset)
-        with open(entry.name, "w+b") as outfile:
+        with open(os.path.join(out_path, entry.name), "w+b") as outfile:
             outfile.write(f.read(entry.size))

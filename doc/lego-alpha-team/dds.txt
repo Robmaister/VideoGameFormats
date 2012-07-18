@@ -1,0 +1,18 @@
+LEGO Alpha Team audio format (.dds)
+
+Mono 44.1kHz Signed 16-bit PCM audio.
+
+Using Audacity:
+File -> Import -> Raw Audio
+
+Encoding: "Signed 16 bit PCM"
+Byte order: "Little-endian"
+Channels: "1 Channel (Mono)"
+Start offset: 0
+Amount to import: 100
+Sample rate: 44100
+
+From there you can save out to wav, flac, mp3, and whatever else Audacity
+supports exporting to.
+
+At some point I may write a batch script or python script to batch convert.

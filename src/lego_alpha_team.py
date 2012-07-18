@@ -3,7 +3,7 @@ from lego_alpha_team.pac import PACFile
 if __name__ == '__main__':
     import sys
     if len(sys.argv) >= 3:
-        f = PACFile(sys.argv[len(sys.argv) - 1])
+        f = PACFile(sys.argv[3])
         if sys.argv[1] == "list":
             if sys.argv[2] == "all":
                 f.print_all_entries()
@@ -11,6 +11,11 @@ if __name__ == '__main__':
                 f.print_entry(sys.argv[2])
         elif sys.argv[1] == "extract":
             if sys.argv[2] == "all":
-                f.extract_all()
+                if len(sys.argv) == 5:
+                    f.extract_all(sys.argv[4])
+                else:
+                    f.extract_all(".")
+            elif len(sys.argv) == 5:
+                f.extract(sys.argv[2], sys.argv[4])
             else:
-                f.extract(sys.argv[2])
+                f.extract(sys.argv[2], ".")
