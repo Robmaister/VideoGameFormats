@@ -18,7 +18,7 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
-from miscutils.filetimes import filetime_to_dt
+from misc.filetimes import filetime_to_dt
 import struct
 import os
 
